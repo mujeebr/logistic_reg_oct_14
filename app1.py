@@ -3,7 +3,7 @@ import mysql.connector
 import numpy as np
 import joblib
 
-model = joblib.load("log.pkl")
+model = joblib.load("logistic.pkl")
 # MySQL connection
 def connect_to_db():
     return mysql.connector.connect(
@@ -28,12 +28,12 @@ if st.button('Predict'):
     user_data = np.array([[age, sex, bp, cholesterol]])
     
     # Make prediction
-    prediction = model.predict(user_data)[0]
+    prediction = model.predict(user_data)[0] # [1 or 0]  [0]
     
     st.write(f"Prediction: {'Heart Disease' if prediction == 1 else 'No Heart Disease'}")
     
     # Store user input and prediction in the database
-    db = connect_to_db()
+    db = connect_to_db() # mysql.conector.connect.cursor()
     cursor = db.cursor()
     
     query = """
